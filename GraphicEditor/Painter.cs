@@ -38,7 +38,7 @@ namespace GraphicEditor
             graphics.DrawRectangle(pen, x, y, width, height);
             graphics.FillRectangle(solidBrush, x, y, width, height);
         }
-        public void Ellips(int x, int y, int width, int height)
+        public void Ellipse(int x, int y, int width, int height)
         {
             graphics.DrawEllipse(pen, x, y, width, height);
             graphics.FillEllipse(solidBrush, x, y, width, height);

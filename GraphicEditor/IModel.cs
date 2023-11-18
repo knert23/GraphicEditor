@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor
 {
-    abstract class SetOfProps
+    interface IModel
     {
-        public abstract void Apply(Painter painter);
+        ICreator Creator { get; }
+
+        IPaint PaintController { get; }
     }
 }
