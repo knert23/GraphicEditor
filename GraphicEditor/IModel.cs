@@ -11,5 +11,9 @@ namespace GraphicEditor
         ICreator Creator { get; }
 
         IPaint PaintController { get; }
+
+        ISelectDealer SelectDealer { get; }
+
+        IObjectStyleSettings FactorySettings { get; }
     }
 }

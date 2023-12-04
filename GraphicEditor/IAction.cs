@@ -8,8 +8,14 @@ namespace GraphicEditor
 {
     interface IAction
     {
-        ObjectType ObjectType { get; set; }
 
+        // Начальное создание объека, пользователь может растянуть объект
+        void MouseDown(int x, int y);
+
+        // Окончательное создание объекта
         void MouseUp(int x, int y);
+
+        // Перемещение объекта
+        void MouseMove(int x, int y);
     }
 }

@@ -8,17 +8,26 @@ namespace GraphicEditor
 {
     class Action: IAction
     {
-        IModel model;
-        public Action(IModel model)
+        StateContainer stateContainer;
+
+        public Action(StateContainer stateContainer)
         {
-            this.model = model;
+            this.stateContainer = stateContainer;
         }
-        public ObjectType ObjectType { get; set; }
+
+        public void MouseDown(int x, int y)
+        {
+            stateContainer.MouseDown(x, y);
+        }
 
         public void MouseUp(int x, int y)
         {
-            model.Creator.ObjectType = ObjectType;
-            model.Creator.CreateObject(x, y);
+            stateContainer.MouseUp(x, y);
+        }
+
+        public void MouseMove(int x, int y)
+        {
+            stateContainer.MouseMove(x, y);
         }
     }
 }

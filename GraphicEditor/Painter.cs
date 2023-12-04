@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace GraphicEditor
 {
@@ -35,13 +34,20 @@ namespace GraphicEditor
         }
         public void Rectangle(int x, int y, int width, int height)
         {
-            graphics.DrawRectangle(pen, x, y, width, height);
-            graphics.FillRectangle(solidBrush, x, y, width, height);
+            graphics.DrawRectangle(pen, x, y, Math.Abs(width), Math.Abs(height));
+            graphics.FillRectangle(solidBrush, x + pen.Width, y + pen.Width, width - pen.Width, height - pen.Width);
         }
         public void Ellipse(int x, int y, int width, int height)
         {
-            graphics.DrawEllipse(pen, x, y, width, height);
-            graphics.FillEllipse(solidBrush, x, y, width, height);
+            graphics.DrawEllipse(pen, x, y, Math.Abs(width), Math.Abs(height));
+            graphics.FillEllipse(solidBrush, x + pen.Width, y + pen.Width, width - pen.Width, height - pen.Width);
+        }
+        public void DrawMarker(int x, int y)
+        {
+            Pen penMarker = new Pen(Color.Black, 1);
+            graphics.DrawRectangle(penMarker, x, y, 5, 5);
+            SolidBrush solidBrushMarker = new SolidBrush(Color.White);
+            graphics.FillRectangle(solidBrush, x + penMarker.Width, y + penMarker.Width, 3 - penMarker.Width, 3 - penMarker.Width);
         }
 
         public Color LineColor

@@ -24,6 +24,16 @@ namespace GraphicEditor
                 return frame;
             }
         }
+
+        public bool InBody(int x, int y)
+        {
+            if (x >= frame.X1 && x <= frame.X2 && y >= frame.Y1 && y <= frame.Y2)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
     abstract class Figure : GraphicObject
@@ -63,9 +73,9 @@ namespace GraphicEditor
 
         static Frame SetFrame(List<GraphicObject> listOfGraphicObject)
         {
-            Frame frame = new Frame(0, 0, 0, 0);
+            Frame frame = listOfGraphicObject[0].Frame;
 
-            for (int i = 0; i < listOfGraphicObject.Count; i++)
+            for (int i = 1; i < listOfGraphicObject.Count; i++)
             {
                 frame += listOfGraphicObject[i].Frame;
             }

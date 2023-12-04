@@ -23,36 +23,46 @@ namespace GraphicEditor
         }
     }
 
-    class LineSetOfProperties : SetOfProps
+    class LineSetOfProperties : SetOfProps, IPenSettings
     {
         public LineSetOfProperties(Color color, float width)
         {
-            Color = color;
-            Width = width;
+            LineColor = color;
+            LineWidth = width;
         }
 
-        Color Color { get; set; }
-        float Width { get; set; }
+        public Color LineColor { get; set; }
+        public float LineWidth { get; set; }
 
         public override void Apply(Painter painter)
         {
-            painter.LineColor = Color;
-            painter.LineWidht = Width;
+            painter.LineColor = LineColor;
+            painter.LineWidht = LineWidth;
+        }
+
+        public LineSetOfProperties Clone()
+        {
+            return new LineSetOfProperties(LineColor, LineWidth);
         }
     }
 
-    class FillSetOfProperties : SetOfProps
+    class FillSetOfProperties : SetOfProps, IBrushSettings
     {
         public FillSetOfProperties(Color color)
         {
-            FillColor = color;
+            BrushColor = color;
         }
 
-        Color FillColor { get; set; }
+        public Color BrushColor { get; set; }
 
         public override void Apply(Painter painter)
         {
-            painter.FillColor = FillColor;
+            painter.FillColor = BrushColor;
+        }
+
+        public FillSetOfProperties Clone()
+        {
+            return new FillSetOfProperties(BrushColor);
         }
     }
 }

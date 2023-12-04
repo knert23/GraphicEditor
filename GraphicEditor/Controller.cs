@@ -10,35 +10,25 @@ namespace GraphicEditor
     {
         IModel model;
         IAction action;
+        StateContainer stateContainer;
+        Settings settings;
+        ObjectStyleSettings objectStyleSettings;
 
-        public IModel Model
-        {
-            set
-            {
-                model = value;
-            }
-        }
+        public IModel Model { set => model = value; }
 
         public Controller(IModel model)
         {
             Model = model;
-            action = new Action(model);
+            stateContainer = new StateContainer(new CreateState((Model)model));
+            action = new Action(stateContainer);
+            objectStyleSettings = new ObjectStyleSettings(model);
+            settings = new Settings(model, objectStyleSettings);
         }
 
-        public IPaint PaintController
-        {
-            get
-            {
-                return model.PaintController;
-            }
-        }
+        public IPaint PaintController { get => model.PaintController; }
 
-        public IAction Action
-        {
-            get
-            {
-                return action;
-            }
-        }
+        public IAction Action { get => action; }
+
+        public ISettings Settings { get => settings; }
     }
 }
