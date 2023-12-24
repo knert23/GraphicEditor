@@ -8,20 +8,21 @@ namespace GraphicEditor
 {
     class Marker
     {
-        public Marker(int x, int y, string location)
+        public Marker(int x, int y, int location)
         {
             X = x;
             Y = y;
-            this.location = location;
+            this.markerNumber = location;
         }
 
-        // Где находится маркер (например, левый верхний)
-        string location;
-        public string Location { get => location; }
+        // Номер маркера (например, 1 - левый верхний, 2 - правый нижний, 3 - правый верхний, 4 - левый нижний)
+        int markerNumber;
+        public int MarkerNumber { get => markerNumber; }
 
         // Координаты края одной из фигуры
         public int X { get; set; }
         public int Y { get; set; }
+
         public void Draw(Painter painter)
         {
             // Здесь отрисовка маркера
@@ -30,7 +31,7 @@ namespace GraphicEditor
 
         public bool TryGrab(int x, int y)
         {
-            if (x >= X && x <= X + 5 && y >= Y && y <= Y + 5) return true;
+            if (x >= X - 3 && x <= X + 3 && y >= Y - 3 && y <= Y + 3) return true;
 
             return false;
         }

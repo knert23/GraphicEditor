@@ -29,5 +29,35 @@ namespace GraphicEditor
         {
             stateContainer.MouseMove(x, y);
         }
+
+        public void StartCreate(ObjectType objectType)
+        {
+            stateContainer.StartCreate(objectType);
+        }
+
+        public void Esc()
+        {
+            stateContainer.Esc();
+        }
+
+        public void Del()
+        {
+            stateContainer.Del();
+        }
+
+        public void ShiftMouseUp(int x, int y)
+        {
+            stateContainer.ShiftMouseUp(x, y);
+        }
+
+        public void Group()
+        {
+            stateContainer.Group();
+        }
+
+        public void Ungroup()
+        {
+            stateContainer.Ungroup();
+        }
     }
 }

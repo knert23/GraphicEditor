@@ -29,6 +29,10 @@ namespace GraphicEditor
             {
                 objectsStrore[i].Draw(painter);
             }
+        }
+
+        public void RefreshMarkers()
+        {
             // Отрисовка выделений (маркеров)
             for (int i = 0; i < selectionStore.Count; i++)
             {

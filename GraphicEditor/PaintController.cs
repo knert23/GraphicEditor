@@ -28,48 +28,19 @@ namespace GraphicEditor
             scene.Refresh();
         }
 
+        public void RefreshMarkers()
+        {
+            scene.RefreshMarkers();
+        }
+
+        public void DrawMarker(int x, int y)
+        {
+            painter.DrawMarker(x, y);
+        }
+
         public void Clear()
         {
             painter.Clear();
-        }
-
-        public void Line(int x1, int y1, int x2, int y2)
-        {
-            painter.Line(x1, y1, x2, y2);
-        }
-
-        public void Rectangle(int x, int y, int width, int height)
-        {
-            painter.Rectangle(x, y, width, height);
-        }
-
-        public void Ellipse(int x, int y, int width, int height)
-        {
-            painter.Ellipse(x, y, width, height);
-        }
-
-        public Color LineColor
-        {
-            set
-            {
-                painter.LineColor = value;
-            }
-        }
-
-        public float LineWidht
-        {
-            set
-            {
-                painter.LineWidht = value;
-            }
-        }
-
-        public Color FillColor
-        {
-            set
-            {
-                painter.FillColor = value;
-            }
         }
     }
 }

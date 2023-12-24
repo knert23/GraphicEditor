@@ -10,13 +10,16 @@ namespace GraphicEditor
     {
         SelectionStore selectionStore;
         ObjectsStrore objectsStore;
-        Painter painter;
-        public SelectDealer(Painter painter, SelectionStore selectionStore, ObjectsStrore objectsStore)
+        Factory factory;
+        public SelectDealer(SelectionStore selectionStore, ObjectsStrore objectsStore, Factory factory)
         {
             this.selectionStore = selectionStore;
             this.objectsStore = objectsStore;
-            this.painter = painter;
+            this.factory = factory;
         }
+
+        public SelectionStore SelectionStore { get => selectionStore; }
+
         public bool TrySelect(int x, int y)
         {
             selectionStore.Clear();
@@ -35,11 +38,19 @@ namespace GraphicEditor
             // Это всё временно
             if (graphicObject is Line)
             {
-                return new LineSelection(painter, graphicObject as Line);
+                return new LineSelection(graphicObject as Line);
             }
             if (graphicObject is Rectangle)
             {
-                return new RectangleSelection(painter, graphicObject as Rectangle);
+                return new RectangleSelection(graphicObject as Rectangle);
+            }
+            if (graphicObject is Ellipse)
+            {
+                return new EllipseSelection(graphicObject as Ellipse);
+            }
+            if (graphicObject is Group)
+            {
+                return new GroupSelection(graphicObject as Group);
             }
             return null;
         }
@@ -66,7 +77,7 @@ namespace GraphicEditor
             return false;
         }
 
-        public bool TryRelease(int x, int y)
+        public bool TryRelease()
         {
             for(int i = 0; i < selectionStore.Count; i++)
             {
@@ -74,6 +85,117 @@ namespace GraphicEditor
             }
 
             return false;
+        }
+
+        public bool TryReplace(int x, int y)
+        {
+            // Проверка, попадает ли курсор в тело какого-либо объекта
+            bool inBody = false;
+            for (int i = 0; i < selectionStore.Count; i++)
+            {
+                if (selectionStore[i].GraphicObject.InBody(x, y)) inBody = true; 
+            }
+
+            // Если курсор не находится в теле какого-либо объекта
+            // то необходимо выйти из метода 
+            if (!inBody) return false;
+
+            for (int i = 0; i < selectionStore.Count; i++)
+            {
+                if (!selectionStore[i].TryReplace(x, y)) return false; 
+            }
+
+            return true;
+        }
+
+        public bool TryAddSelection(int x, int y)
+        {
+            GraphicObject graphicObject = objectsStore.GetObjectAtPoint(x, y);
+            if (graphicObject == null) return false;
+            if (selectionStore.IsSelected(graphicObject)) return false;
+
+            Selection selection = CreateSelection(graphicObject);
+            selectionStore.Add(selection);
+
+            return true;
+        }
+
+        public void DeleteSelected()
+        {
+            List<GraphicObject> list = GetListOfSelectedObjects();
+            objectsStore.DeleteObjects(list);
+            SkipSelection(list);
+        }
+
+        public List<GraphicObject> GetListOfSelectedObjects()
+        {
+            List<GraphicObject> list = new List<GraphicObject>();
+            for (int i = 0; i < selectionStore.Count; i++)
+            {
+                list.Add(selectionStore[i].GraphicObject);
+            }
+
+            return list;
+        }
+
+        public void SkipSelection(List<GraphicObject> list)
+        {
+            selectionStore.DeleteSelections(list);
+        }
+
+        public void Group()
+        {
+            // Получение всех выделенных объектов
+            List<GraphicObject> list = GetListOfSelectedObjects();
+            // Удаление выделений выделенных объектов
+            SkipSelection(list);
+            // Создание группы
+            factory.CreateGroup(list);
+            // либо брать всегда последний объект objectStore, либо сделать так,
+            // чтобы  CreateObject возвращал создаваемый объект (параметр, передаваемый в CreateSelection)
+            Selection groupSelection = CreateSelection(objectsStore[objectsStore.Count - 1]);
+            selectionStore.Add(groupSelection);
+        }
+
+        public void Ungroup()
+        {
+            if (selectionStore.Count > 1) return;
+            if (!(selectionStore[0] is GroupSelection)) return;
+
+            // Получение группы
+            List<GraphicObject> list = GetListOfSelectedObjects();
+            Group group = (Group) list[0];
+            // Удаление группы
+            objectsStore.DeleteObjects(list);
+            // Удаление выделения группы 
+            selectionStore.Clear();
+            // Добавление объектов из группы в хранилище и создание выделений
+            for (int i = 0; i < group.GroupObjects.Count; i++)
+            {
+                GraphicObject graphicObject = group.GroupObjects[i];
+                objectsStore.Add(graphicObject);
+                selectionStore.Add(CreateSelection(graphicObject));
+            }
+        }
+
+        // Обновление выделений после смены стилей объектов
+        public void RefreshSelections()
+        {
+            // Получение всех выделенных объектов
+            List<GraphicObject> list = GetListOfSelectedObjects();
+            // Удаление выделений выделенных объектов
+            SkipSelection(list);
+            // Обновление стилей объектов
+            factory.RefreshObjectsStyle(list);
+            // Добавление selection для объектов, у которых обновлен стиль
+            for (int i = 0; i < objectsStore.Count; i++)
+            {
+                if (objectsStore[i].isStyleChanged)
+                {
+                    selectionStore.Add(CreateSelection(objectsStore[i]));
+                    objectsStore[i].isStyleChanged = false;
+                }
+            }
         }
     }
 }

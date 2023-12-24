@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 namespace GraphicEditor
 {
 
-    enum ObjectType
+    public enum ObjectType
     {
         Line,
         Rectangle,
-        Ellipse
+        Ellipse,
+        Group
     }
 
     interface ICreator
     {
+        void RefreshObjectsStyle(List<GraphicObject> list);
         ObjectType ObjectType { get; set; }
 
         void CreateObject(int x, int y);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphicEditor.States;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace GraphicEditor
         public Controller(IModel model)
         {
             Model = model;
-            stateContainer = new StateContainer(new CreateState((Model)model));
+            stateContainer = new StateContainer(new EmptyState((Model)model));
             action = new Action(stateContainer);
             objectStyleSettings = new ObjectStyleSettings(model);
             settings = new Settings(model, objectStyleSettings);

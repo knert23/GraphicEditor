@@ -17,5 +17,23 @@ namespace GraphicEditor
 
         // Перемещение объекта
         void MouseMove(int x, int y);
+
+        // Начальное создание объекта
+        void StartCreate(ObjectType objectType);
+
+        // Выход
+        void Esc();
+
+        // Удаление
+        void Del();
+
+        // Выделение фигур 
+        void ShiftMouseUp(int x, int y);
+
+        // Группировка объектов
+        void Group();
+
+        // Разгруппировка объектов
+        void Ungroup();
     }
 }

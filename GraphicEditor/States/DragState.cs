@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphicEditor.States;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +13,17 @@ namespace GraphicEditor
 
         public override void MouseUp(int x, int y, StateContainer stateContainer)
         {
-            // Конечное вид объекта
-            if (model.SelectDealer.TryRelease(x, y))
-            {
-                stateContainer.State = new CreateState(model);
-            }
+            if (model.SelectDealer.TryRelease()) stateContainer.State = new SingleSelectedState(model);
         }
         public override void MouseMove(int x, int y, StateContainer stateContainer)
         {
             // Трансформация объекта
-            if (model.SelectDealer.TryDrag(x, y)) model.PaintController.Refresh();
+            if (model.SelectDealer.TryDrag(x, y))
+            {
+                model.PaintController.Refresh();
+                model.PaintController.RefreshMarkers();
+            }
+                
         }
     }
 }

@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor
 {
-    class RectangleSelection : Selection
+    class EllipseSelection: Selection
     {
-        Rectangle Rectangle { get; set; }
-        public RectangleSelection(Rectangle rectangle) : base(rectangle)
+        Ellipse Ellipse { get; set; }
+        public EllipseSelection(Ellipse ellipse) : base(ellipse)
         {
-            Rectangle = rectangle;
+            Ellipse = ellipse;
             CreateMarkers();
         }
 
         protected override void CreateMarkers()
         {
-            Frame frame = Rectangle.Frame;
+            Frame frame = Ellipse.Frame;
 
             Marker marker = new Marker(frame.X1, frame.Y1, 1);
             markers.Add(marker);
@@ -40,20 +40,20 @@ namespace GraphicEditor
                 switch (markers[i].MarkerNumber)
                 {
                     case 1:
-                        markers[i].X = Rectangle.Frame.X1;
-                        markers[i].Y = Rectangle.Frame.Y1;
+                        markers[i].X = Ellipse.Frame.X1;
+                        markers[i].Y = Ellipse.Frame.Y1;
                         break;
                     case 2:
-                        markers[i].X = Rectangle.Frame.X2;
-                        markers[i].Y = Rectangle.Frame.Y2;
+                        markers[i].X = Ellipse.Frame.X2;
+                        markers[i].Y = Ellipse.Frame.Y2;
                         break;
                     case 3:
-                        markers[i].X = Rectangle.Frame.X2;
-                        markers[i].Y = Rectangle.Frame.Y1;
+                        markers[i].X = Ellipse.Frame.X2;
+                        markers[i].Y = Ellipse.Frame.Y1;
                         break;
                     case 4:
-                        markers[i].X = Rectangle.Frame.X1;
-                        markers[i].Y = Rectangle.Frame.Y2;
+                        markers[i].X = Ellipse.Frame.X1;
+                        markers[i].Y = Ellipse.Frame.Y2;
                         break;
                     default:
                         return false;

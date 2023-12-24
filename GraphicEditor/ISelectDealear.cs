@@ -8,9 +8,17 @@ namespace GraphicEditor
 {
     interface ISelectDealer
     {
+        SelectionStore SelectionStore { get; }
         bool TrySelect(int x, int y);
         bool TryGrab(int x, int y);
         bool TryDrag(int x, int y);
-        bool TryRelease(int x, int y);
+        bool TryReplace(int x, int y);
+        bool TryRelease();
+        bool TryAddSelection(int x, int y);
+        void DeleteSelected();
+        void SkipSelection(List<GraphicObject> list);
+        void Group();
+        void Ungroup();
+        void RefreshSelections();
     }
 }

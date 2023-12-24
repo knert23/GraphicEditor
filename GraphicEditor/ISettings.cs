@@ -8,11 +8,11 @@ namespace GraphicEditor
 {
     interface ISettings
     {
-        ObjectType ObjectType { get; set; }
 
         IObjectStyleSettings ObjectStyleSettings { get; }
 
-        void SetObjectType();
         void SetObjectStyleSettings();
+
+        void Refresh();
     }
 }

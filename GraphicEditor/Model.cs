@@ -23,7 +23,7 @@ namespace GraphicEditor
             selectionStore = new SelectionStore();
             scene = new Scene(objectsStore, painter, selectionStore);
             paintController = new PaintController(scene, painter);
-            selectDealear = new SelectDealer(painter, selectionStore, objectsStore);
+            selectDealear = new SelectDealer(selectionStore, objectsStore, factory);
         }
         public ICreator Creator { get => factory; }
 

@@ -13,18 +13,10 @@ namespace GraphicEditor
 
         void Refresh();
 
+        void RefreshMarkers();
+
+        void DrawMarker(int x, int y);
+
         void Clear();
-
-        void Line(int x1, int y1, int x2, int y2);
-
-        void Rectangle(int x, int y, int width, int height);
-
-        void Ellipse(int x, int y, int width, int height);
-
-        Color LineColor { set; }
-
-        float LineWidht { set; }
-
-        Color FillColor { set; }
     }
 }

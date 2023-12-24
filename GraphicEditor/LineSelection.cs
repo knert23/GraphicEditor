@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor
 {
-    class LineSelection: Selection
+    class LineSelection : Selection
     {
         Line Line { get; set; }
-        public LineSelection(Painter painter, Line line) : base(line)
+        public LineSelection(Line line) : base(line)
         {
             Line = line;
             CreateMarkers();
@@ -19,10 +19,10 @@ namespace GraphicEditor
         {
             Frame frame = Line.Frame;
 
-            Marker marker = new Marker(frame.X1 - 5, frame.Y1 -5, "left");
+            Marker marker = new Marker(frame.X1, frame.Y1, 1);
             markers.Add(marker);
 
-            Marker marker2 = new Marker(frame.X2 + 5, frame.Y2 + 5, "right");
+            Marker marker2 = new Marker(frame.X2, frame.Y2, 2);
             markers.Add(marker2);
         }
 
@@ -30,18 +30,18 @@ namespace GraphicEditor
         {
             for (int i = 0; i < markers.Count; i++)
             {
-                switch (markers[i].Location)
+                switch (markers[i].MarkerNumber)
                 {
-                    case "left":
+                    case 1:
                         markers[i].X = Line.Frame.X1;
                         markers[i].Y = Line.Frame.Y1;
                         break;
-                    case "right":
+                    case 2:
                         markers[i].X = Line.Frame.X2;
                         markers[i].Y = Line.Frame.Y2;
                         break;
-                    case "undefined":
-                        return false;  
+                    default:
+                        return false;
                 }
             }
 

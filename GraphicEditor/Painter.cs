@@ -34,20 +34,72 @@ namespace GraphicEditor
         }
         public void Rectangle(int x, int y, int width, int height)
         {
+            // Если значения width и height отрицательные,
+            // то для правильной отрисовки необходимо их прибавить к паре координат
+
+            // Перемещение в сторону увеличения x и y
+            if (width < 0 && height < 0)
+            {
+                graphics.DrawRectangle(pen, x + width, y + height, Math.Abs(width), Math.Abs(height));
+                graphics.FillRectangle(solidBrush, x + width + pen.Width / 2, y + height + pen.Width / 2, Math.Abs(width) - pen.Width, Math.Abs(height) - pen.Width);
+                return;
+            }
+
+            // Перемещение в сторону увеличения x
+            if (width < 0)
+            {
+                graphics.DrawRectangle(pen, x + width, y, Math.Abs(width), height);
+                graphics.FillRectangle(solidBrush, x + width + pen.Width / 2, y + pen.Width / 2, Math.Abs(width) - pen.Width, height - pen.Width);
+                return;
+            }
+
+            // Перемещение в сторону увеличения y
+            if (height < 0)
+            {
+                graphics.DrawRectangle(pen, x, y + height, width, Math.Abs(height));
+                graphics.FillRectangle(solidBrush, x + pen.Width / 2, y + height + pen.Width / 2, width - pen.Width, Math.Abs(height) - pen.Width);
+                return;
+            }
             graphics.DrawRectangle(pen, x, y, Math.Abs(width), Math.Abs(height));
-            graphics.FillRectangle(solidBrush, x + pen.Width, y + pen.Width, width - pen.Width, height - pen.Width);
+            graphics.FillRectangle(solidBrush, x + pen.Width / 2, y + pen.Width / 2, width - pen.Width, height - pen.Width);
         }
         public void Ellipse(int x, int y, int width, int height)
         {
+            // Если значения width и height отрицательные,
+            // то для правильной отрисовки необходимо их прибавить к паре координат
+
+            // Перемещение в сторону увеличения x и y
+            if (width < 0 && height < 0)
+            {
+                graphics.DrawEllipse(pen, x + width, y + height, Math.Abs(width), Math.Abs(height));
+                graphics.FillEllipse(solidBrush, x + width + pen.Width / 2, y + height + pen.Width / 2, Math.Abs(width) - pen.Width, Math.Abs(height) - pen.Width);
+                return;
+            }
+
+            // Перемещение в сторону увеличения x
+            if (width < 0)
+            {
+                graphics.DrawEllipse(pen, x + width, y, Math.Abs(width), height);
+                graphics.FillEllipse(solidBrush, x + width + pen.Width / 2, y + pen.Width / 2, Math.Abs(width) - pen.Width, height - pen.Width);
+                return;
+            }
+
+            // Перемещение в сторону увеличения y
+            if (height < 0)
+            {
+                graphics.DrawEllipse(pen, x, y + height, width, Math.Abs(height));
+                graphics.FillEllipse(solidBrush, x + pen.Width / 2, y + height + pen.Width / 2, width - pen.Width, Math.Abs(height) - pen.Width);
+                return;
+            }
             graphics.DrawEllipse(pen, x, y, Math.Abs(width), Math.Abs(height));
-            graphics.FillEllipse(solidBrush, x + pen.Width, y + pen.Width, width - pen.Width, height - pen.Width);
+            graphics.FillEllipse(solidBrush, x + pen.Width / 2, y + pen.Width / 2, width - pen.Width, height - pen.Width);
         }
         public void DrawMarker(int x, int y)
         {
             Pen penMarker = new Pen(Color.Black, 1);
-            graphics.DrawRectangle(penMarker, x, y, 5, 5);
+            graphics.DrawRectangle(penMarker, x - 3, y - 3, 6, 6);
             SolidBrush solidBrushMarker = new SolidBrush(Color.White);
-            graphics.FillRectangle(solidBrush, x + penMarker.Width, y + penMarker.Width, 3 - penMarker.Width, 3 - penMarker.Width);
+            graphics.FillRectangle(solidBrushMarker, x - 3 + penMarker.Width / 2, y - 3 + penMarker.Width / 2, 6 - penMarker.Width, 6 - penMarker.Width);
         }
 
         public Color LineColor

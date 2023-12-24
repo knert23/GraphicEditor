@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace GraphicEditor
 {
-    class RectangleSelection : Selection
+    class GroupSelection:Selection
     {
-        Rectangle Rectangle { get; set; }
-        public RectangleSelection(Rectangle rectangle) : base(rectangle)
+        Group Group { get; set; }
+        public GroupSelection(Group group) : base(group)
         {
-            Rectangle = rectangle;
+            Group = group;
             CreateMarkers();
         }
 
         protected override void CreateMarkers()
         {
-            Frame frame = Rectangle.Frame;
+            Frame frame = Group.Frame;
 
             Marker marker = new Marker(frame.X1, frame.Y1, 1);
             markers.Add(marker);
@@ -30,7 +30,6 @@ namespace GraphicEditor
 
             Marker marker4 = new Marker(frame.X2, frame.Y1, 3);
             markers.Add(marker4);
-
         }
 
         protected override bool RefreshMarkerCoordinates()
@@ -40,20 +39,20 @@ namespace GraphicEditor
                 switch (markers[i].MarkerNumber)
                 {
                     case 1:
-                        markers[i].X = Rectangle.Frame.X1;
-                        markers[i].Y = Rectangle.Frame.Y1;
+                        markers[i].X = Group.Frame.X1;
+                        markers[i].Y = Group.Frame.Y1;
                         break;
                     case 2:
-                        markers[i].X = Rectangle.Frame.X2;
-                        markers[i].Y = Rectangle.Frame.Y2;
+                        markers[i].X = Group.Frame.X2;
+                        markers[i].Y = Group.Frame.Y2;
                         break;
                     case 3:
-                        markers[i].X = Rectangle.Frame.X2;
-                        markers[i].Y = Rectangle.Frame.Y1;
+                        markers[i].X = Group.Frame.X2;
+                        markers[i].Y = Group.Frame.Y1;
                         break;
                     case 4:
-                        markers[i].X = Rectangle.Frame.X1;
-                        markers[i].Y = Rectangle.Frame.Y2;
+                        markers[i].X = Group.Frame.X1;
+                        markers[i].Y = Group.Frame.Y2;
                         break;
                     default:
                         return false;
