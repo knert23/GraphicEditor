@@ -19,6 +19,6 @@ namespace GraphicEditor
         void SkipSelection(List<GraphicObject> list);
         void Group();
         void Ungroup();
-        void RefreshSelections();
+        void RefreshSelections(IObjectStyleSettings objectStyleSettings, StyleType styleType);
     }
 }

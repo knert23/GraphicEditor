@@ -32,7 +32,7 @@ namespace GraphicEditor
             return false;
         }
 
-        public ObjectType GetObjectType()
+        /*public ObjectType GetObjectType()
         {
             if (this is Line) return ObjectType.Line;
             if (this is Rectangle) return ObjectType.Rectangle;
@@ -40,7 +40,7 @@ namespace GraphicEditor
             if (this is Group) return ObjectType.Group;
 
             return 0;
-        }
+        }*/
     }
 
     abstract class Figure : GraphicObject

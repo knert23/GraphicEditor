@@ -22,7 +22,7 @@ namespace GraphicEditor
             Model = model;
             stateContainer = new StateContainer(new EmptyState((Model)model));
             action = new Action(stateContainer);
-            objectStyleSettings = new ObjectStyleSettings(model);
+            objectStyleSettings = new ObjectStyleSettings();
             settings = new Settings(model, objectStyleSettings);
         }
 

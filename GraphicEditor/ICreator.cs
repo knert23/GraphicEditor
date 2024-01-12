@@ -17,7 +17,6 @@ namespace GraphicEditor
 
     interface ICreator
     {
-        void RefreshObjectsStyle(List<GraphicObject> list);
         ObjectType ObjectType { get; set; }
 
         void CreateObject(int x, int y);

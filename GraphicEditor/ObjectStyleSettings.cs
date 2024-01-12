@@ -9,19 +9,15 @@ namespace GraphicEditor
 {
     class ObjectStyleSettings : IObjectStyleSettings
     {
-        IModel Model { get; set; }
-        public ObjectStyleSettings(IModel model)
+        LineSetOfProperties lineSetOfProperties;
+        FillSetOfProperties FillSetOfProperties;
+        public ObjectStyleSettings()
         {
-            Model = model;
+            lineSetOfProperties = new LineSetOfProperties(Color.Black, 1);
+            FillSetOfProperties = new FillSetOfProperties(Color.White);
         }
-        public IPenSettings PenSettings { get => Model.FactorySettings.PenSettings; }
+        public IPenSettings PenSettings { get => lineSetOfProperties; }
 
-        public IBrushSettings BrushSettings { get => Model.FactorySettings.BrushSettings; }
-        public bool isLineColorChanged { get => Model.FactorySettings.isLineColorChanged; 
-            set => Model.FactorySettings.isLineColorChanged = value; }
-        public bool isLineWidthChanged { get => Model.FactorySettings.isLineWidthChanged; 
-            set => Model.FactorySettings.isLineWidthChanged = value; }
-        public bool isFillColorChanged { get => Model.FactorySettings.isFillColorChanged; 
-            set => Model.FactorySettings.isFillColorChanged = value; }
+        public IBrushSettings BrushSettings { get => FillSetOfProperties; }
     }
 }

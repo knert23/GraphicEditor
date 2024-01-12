@@ -8,10 +8,6 @@ namespace GraphicEditor
 {
     interface IObjectStyleSettings
     {
-
-        bool isLineColorChanged { get; set; }
-        bool isLineWidthChanged { get; set; }
-        bool isFillColorChanged { get; set; }
         IPenSettings PenSettings { get; }
 
         IBrushSettings BrushSettings { get; }

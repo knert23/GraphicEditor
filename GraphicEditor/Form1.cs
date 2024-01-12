@@ -39,7 +39,7 @@ namespace GraphicEditor
 
             SetStyleSettingsWidth();
         }
-
+        
         private void ButtonEllipse_Click(object sender, EventArgs e)
         {
             controller.Action.StartCreate(ObjectType.Ellipse);
@@ -53,10 +53,14 @@ namespace GraphicEditor
             if (lineSize <= 0) lineSize = 1;
 
             controller.Settings.ObjectStyleSettings.PenSettings.LineWidth = lineSize;
-            controller.Settings.ObjectStyleSettings.isLineWidthChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            if (controller.Settings.SelectionStoreCount == 0)
+            {
+                controller.Settings.SetObjectStyleSettings();
+            }
+            else
+            {
+                controller.Settings.Refresh(StyleType.LineWidth);
+            }     
         }
 
         // Для того, что бы событие MouseMove срабатывало только после MouseDown
@@ -115,86 +119,69 @@ namespace GraphicEditor
         }
 
 
+
+
+
+
         /*------------------------------------------Цвета линии------------------------------------------*/
+        private void ChangeLineColor(Color color)
+        {
+            // если selectionStore.Count == 0, то смена настроек фабрики
+            // иначе меняем настройки стиля объектов
+            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = color;
+            if (controller.Settings.SelectionStoreCount == 0)
+            {
+                controller.Settings.SetObjectStyleSettings();
+            }
+            else
+            {
+                controller.Settings.Refresh(StyleType.LineColor);
+            }
+        }
+
         private void buttonWhite_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonWhite.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonWhite.BackColor);
         }
 
         private void buttonBlack_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonBlack.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonBlack.BackColor);
         }
 
         private void buttonRed_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonRed.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonRed.BackColor);
         }
 
         private void buttonBlue_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonBlue.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonBlue.BackColor);
         }
 
         private void buttonYellow_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonYellow.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonYellow.BackColor);
         }
 
         private void buttonGreen_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonGreen.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonGreen.BackColor);
         }
 
         private void buttonViolet_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonViolet.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonViolet.BackColor);
         }
 
         private void buttonOrange_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonOrange.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonOrange.BackColor);
         }
 
         private void buttonStateBlue_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = buttonStateBlue.BackColor;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(buttonStateBlue.BackColor);
         }
 
         private void buttonAddNewColor_Click(object sender, EventArgs e)
@@ -204,11 +191,7 @@ namespace GraphicEditor
             {
                 buttonAddNewColor.BackColor = colorDialog.Color;
             }
-            controller.Settings.ObjectStyleSettings.PenSettings.LineColor = colorDialog.Color;
-            controller.Settings.ObjectStyleSettings.isLineColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeLineColor(colorDialog.Color);
         }
 
 
@@ -216,86 +199,64 @@ namespace GraphicEditor
 
 
 
-        /*------------------------------------------Цвета фона------------------------------------------*/
+        /*------------------------------------------Цвета заливки------------------------------------------*/
+        private void ChangeFillColor(Color color)
+        {
+            // если selectionStore.Count == 0, то смена настроек фабрики
+            // иначе меняем настройки стиля объектов
+            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = color;
+            if (controller.Settings.SelectionStoreCount == 0)
+            {
+                controller.Settings.SetObjectStyleSettings();
+            }
+            else
+            {
+                controller.Settings.Refresh(StyleType.FillColor);
+            }
+        }
         private void buttonBackWhite_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackWhite.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackWhite.BackColor);
         }
 
         private void buttonBackBlack_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackBlack.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackBlack.BackColor);
         }
 
         private void buttonBackRed_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackRed.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackRed.BackColor);
         }
 
         private void buttonBackBlue_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackBlue.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackBlue.BackColor);
         }
 
         private void buttonBackYellow_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackYellow.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackYellow.BackColor);
         }
 
         private void buttonBackGreen_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackGreen.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackGreen.BackColor);
         }
 
         private void buttonBackViolet_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackViolet.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackViolet.BackColor);
         }
 
         private void buttonBackOrange_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackOrange.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackOrange.BackColor);
         }
 
         private void buttonBackStateBlue_Click(object sender, EventArgs e)
         {
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = buttonBackStateBlue.BackColor;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(buttonBackStateBlue.BackColor);
         }
 
         private void buttonBackAddNewColor_Click(object sender, EventArgs e)
@@ -305,11 +266,7 @@ namespace GraphicEditor
             {
                 buttonBackAddNewColor.BackColor = colorDialog.Color;
             }
-            controller.Settings.ObjectStyleSettings.BrushSettings.BrushColor = colorDialog.Color;
-            controller.Settings.ObjectStyleSettings.isFillColorChanged = true;
-
-            controller.Settings.SetObjectStyleSettings();
-            controller.Settings.Refresh();
+            ChangeFillColor(colorDialog.Color);
         }
     }
 }

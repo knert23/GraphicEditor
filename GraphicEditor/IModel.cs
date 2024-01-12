@@ -15,5 +15,7 @@ namespace GraphicEditor
         ISelectDealer SelectDealer { get; }
 
         IObjectStyleSettings FactorySettings { get; }
+
+        int SelectionStoreCount { get; }
     }
 }

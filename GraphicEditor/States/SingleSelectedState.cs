@@ -47,7 +47,7 @@ namespace GraphicEditor.States
 
         public override void Esc(StateContainer stateContainer)
         {
-            model.SelectDealer.TryRelease();
+            model.SelectDealer.SelectionStore.Clear();
             model.PaintController.Refresh();
             stateContainer.State = new EmptyState(model);
         }

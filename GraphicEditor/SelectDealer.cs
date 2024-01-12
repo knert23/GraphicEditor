@@ -129,13 +129,7 @@ namespace GraphicEditor
 
         public List<GraphicObject> GetListOfSelectedObjects()
         {
-            List<GraphicObject> list = new List<GraphicObject>();
-            for (int i = 0; i < selectionStore.Count; i++)
-            {
-                list.Add(selectionStore[i].GraphicObject);
-            }
-
-            return list;
+            return selectionStore.GetListOfSelectedObjects();
         }
 
         public void SkipSelection(List<GraphicObject> list)
@@ -179,14 +173,14 @@ namespace GraphicEditor
         }
 
         // Обновление выделений после смены стилей объектов
-        public void RefreshSelections()
+        public void RefreshSelections(IObjectStyleSettings objectStyleSettings, StyleType styleType)
         {
             // Получение всех выделенных объектов
             List<GraphicObject> list = GetListOfSelectedObjects();
             // Удаление выделений выделенных объектов
             SkipSelection(list);
             // Обновление стилей объектов
-            factory.RefreshObjectsStyle(list);
+            RefreshObjectsStyle(list,  objectStyleSettings, styleType);
             // Добавление selection для объектов, у которых обновлен стиль
             for (int i = 0; i < objectsStore.Count; i++)
             {
@@ -195,6 +189,58 @@ namespace GraphicEditor
                     selectionStore.Add(CreateSelection(objectsStore[i]));
                     objectsStore[i].isStyleChanged = false;
                 }
+            }
+        }
+
+        // Обновление стилей объекта
+        public void RefreshObjectsStyle(List<GraphicObject> list, IObjectStyleSettings objectStyleSettings, StyleType styleType)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                for (int j = 0; j < objectsStore.Count; j++)
+                {
+                    if (objectsStore[j].Frame.Equals(list[i].Frame))
+                    {
+                        if (objectsStore[j] is Group) RefreshObjectsStyleGroup((objectsStore[j] as Group).GroupObjects, objectStyleSettings, styleType);
+                        else
+                        {
+                            ChangeProperties(objectsStore[j], objectStyleSettings, styleType);
+                        }
+                        objectsStore[j].isStyleChanged = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Частный случай для группы
+        public void RefreshObjectsStyleGroup(List<GraphicObject> groupObjects, IObjectStyleSettings objectStyleSettings, StyleType styleType)
+        {
+            for (int i = 0; i < groupObjects.Count; i++)
+            {
+                if (groupObjects[i] is Group) RefreshObjectsStyleGroup((groupObjects[i] as Group).GroupObjects, objectStyleSettings, styleType);
+                else
+                {
+                    ChangeProperties(groupObjects[i], objectStyleSettings, styleType);
+                }
+            }
+        }
+
+        // Смена стиля фигур, которая производитс по типу меняего стиля
+        private void ChangeProperties(GraphicObject graphicObject, IObjectStyleSettings objectStyleSettings, StyleType styleType)
+        {
+            switch (styleType)
+            {
+                case StyleType.LineColor:
+                    (graphicObject as Figure).LineProps.LineColor = objectStyleSettings.PenSettings.LineColor;
+                    break;
+                case StyleType.LineWidth:   
+                    (graphicObject as Figure).LineProps.LineWidth = objectStyleSettings.PenSettings.LineWidth;
+                    break;
+                case StyleType.FillColor:
+                    if (graphicObject is Line) return;
+                    (graphicObject as Figure).FillProps.BrushColor = objectStyleSettings.BrushSettings.BrushColor;
+                    break;
             }
         }
     }

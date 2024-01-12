@@ -8,11 +8,19 @@ namespace GraphicEditor
 {
     interface ISettings
     {
-
         IObjectStyleSettings ObjectStyleSettings { get; }
+
+        int SelectionStoreCount { get; }
 
         void SetObjectStyleSettings();
 
-        void Refresh();
+        void Refresh(StyleType styleType);
+    }
+
+    public enum StyleType
+    {
+        LineColor,
+        LineWidth,
+        FillColor
     }
 }

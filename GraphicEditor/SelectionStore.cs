@@ -39,5 +39,16 @@ namespace GraphicEditor
                 }
             }
         }
+
+        public List<GraphicObject> GetListOfSelectedObjects()
+        {
+            List<GraphicObject> list = new List<GraphicObject>();
+            for (int i = 0; i < Count; i++)
+            {
+                list.Add(this[i].GraphicObject);
+            }
+
+            return list;
+        }
     }
 }

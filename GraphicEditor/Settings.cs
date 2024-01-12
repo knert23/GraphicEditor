@@ -10,6 +10,7 @@ namespace GraphicEditor
     {
         IModel Model { get; set; }
         IObjectStyleSettings objectStyleSettings;
+        public int SelectionStoreCount { get => Model.SelectionStoreCount; }
         public Settings(IModel model, IObjectStyleSettings objectStyleSettings)
         {
             Model = model;
@@ -22,43 +23,17 @@ namespace GraphicEditor
         public void SetObjectStyleSettings()
         {
             Model.FactorySettings.PenSettings.LineColor = objectStyleSettings.PenSettings.LineColor;
-            Model.FactorySettings.isLineColorChanged = objectStyleSettings.isLineColorChanged;
 
             Model.FactorySettings.PenSettings.LineWidth = objectStyleSettings.PenSettings.LineWidth;
-            Model.FactorySettings.isLineWidthChanged = objectStyleSettings.isLineWidthChanged;
 
             Model.FactorySettings.BrushSettings.BrushColor = objectStyleSettings.BrushSettings.BrushColor;
-            Model.FactorySettings.isFillColorChanged = objectStyleSettings.isFillColorChanged;
-
-            /*Color oldLineColor = Model.FactorySettings.PenSettings.LineColor;
-            Color newLinecolor = objectStyleSettings.PenSettings.LineColor;
-            if (oldLineColor != newLinecolor)
-            {
-                Model.FactorySettings.PenSettings.LineColor = newLinecolor;
-                Model.FactorySettings.isLineColorChanged = true;
-            }
-
-            float oldLineWidth = Model.FactorySettings.PenSettings.LineWidth;
-            float newLineWidth = objectStyleSettings.PenSettings.LineWidth;
-            if (oldLineWidth != newLineWidth)
-            {
-                Model.FactorySettings.PenSettings.LineWidth = newLineWidth;
-                Model.FactorySettings.isLineWidthChanged = true;
-            }
-
-            Color oldFillColor = Model.FactorySettings.BrushSettings.BrushColor;
-            Color newFillColor = objectStyleSettings.BrushSettings.BrushColor;
-            if (oldFillColor != newFillColor)
-            {
-                Model.FactorySettings.BrushSettings.BrushColor = newFillColor;
-                Model.FactorySettings.isFillColorChanged = true;
-            }*/
         }
 
-        public void Refresh()
+        public void Refresh(StyleType styleType)
         {
             // Реализацию конечно можно было и лучше сделать, а не вот это вот
-            Model.SelectDealer.RefreshSelections();
+            // Сделать с модели канал для доступа к смене настроек стиля объекта, как у фабрики
+            Model.SelectDealer.RefreshSelections(ObjectStyleSettings, styleType);
             Model.PaintController.Refresh();
             Model.PaintController.RefreshMarkers();
         }

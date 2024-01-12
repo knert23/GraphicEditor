@@ -32,5 +32,7 @@ namespace GraphicEditor
         public ISelectDealer SelectDealer { get => selectDealear; }
 
         public IObjectStyleSettings FactorySettings { get => factory; }
+
+        public int SelectionStoreCount { get => selectionStore.Count; }
     }
 }
